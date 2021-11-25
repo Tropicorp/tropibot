@@ -45,7 +45,7 @@ exports.roulette = function (message) {
 exports.stellaris = function (bot, message) {
     message.channel.send("<@" + config.cerbearId + ">, PTIT STELLARIS ?");
     const cerbear = bot.users.cache.get(config.cerbearId);
-    if(cerbear){
+    if(cerbear != undefined) {
         cerbear.send("Stellaris when ? Tu as promis.");
     }  
     message.delete();
