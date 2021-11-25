@@ -21,7 +21,6 @@ const pollEmbed = new Discord.MessageEmbed()
 
 exports.help = function (message) {
     message.channel.send({embeds : [helpEmbed]});
-    message.channel.send("help");
 }
 
 exports.poll = function (bot, message, args) {
