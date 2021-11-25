@@ -22,8 +22,12 @@ bot.on('ready', () => {
 })
 
 bot.on('messageCreate', message => {
-    console.log(message.channel.id);
+    console.log("Message : "+ message.content + " | Channel ID : " + message.channel.id);
     if (message.author.bot) return;
+
+    if(message.content.includes(bot.user.id)){
+        message.reply("Tg");
+    }
 
     if (message.content[0] === PREFIX) {
         let args = message.content.substring(PREFIX.length).split(" ");
