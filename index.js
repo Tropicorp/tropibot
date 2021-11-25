@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const TOKEN = process.env.TOKEN || 0;
 const bot = new Discord.Client({
     intents: [
         Discord.Intents.FLAGS.GUILDS, //Servers
@@ -10,6 +9,7 @@ const bot = new Discord.Client({
 
 const config = require("./config.json");
 const token = require("./token.json"); //à ajouter manuellement, info sensible
+const TOKEN = process.env.TOKEN || token.token;
 const web = require("./BotModules/web");
 const gen = require("./BotModules/general");
 
