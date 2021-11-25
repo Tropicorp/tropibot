@@ -8,7 +8,10 @@ const helpEmbed = new Discord.MessageEmbed()
     .addField("?ping","Renvoies Pong")
     .addField("?curse", "Envoie une cursed_image")
     .addField("?poll *question*", "Envoies un sondage")
-    .setTimestamp();
+    .addField("?roulette", "1 chance sur 6 de se faire kick")
+    .setTimestamp()
+    .setAuthor("Tropibot", "https://cdn.discordapp.com/attachments/846773549661552710/846773670806683699/Logo_Tropicorp.png", "https://github.com/Tropicorp/tropibot");
+
 
 const pollEmbed = new Discord.MessageEmbed()
     .setTitle("TUTO SONDAJ")
@@ -17,7 +20,7 @@ const pollEmbed = new Discord.MessageEmbed()
     .setURL("https://www.youtube.com/watch?v=kJQP7kiw5Fk")
     .setDescription("?poll (question)")
     .setTimestamp()
-    .setAuthor("Tropibot", "");
+    .setAuthor("Tropibot", "https://cdn.discordapp.com/attachments/846773549661552710/846773670806683699/Logo_Tropicorp.png", "https://github.com/Tropicorp/tropibot");
 
 exports.help = function (message) {
     message.channel.send({embeds : [helpEmbed]});
@@ -25,7 +28,7 @@ exports.help = function (message) {
 
 exports.poll = function (bot, message, args) {
     if (!args[1]) {
-        message.channel.send({embeds : [pollEmbed]});
+        message.reply("ça s'utilise comme ça : ?poll *question*");
         return;
     }
     let msgArgs = args.slice(1).join(" ");
@@ -34,6 +37,15 @@ exports.poll = function (bot, message, args) {
         messageReaction.react("❎");
         message.delete(3000);
     });
+}
+
+exports.roulette = function (message) {
+    if(Math.floor(Math.random()*6) === 0){
+        message.reply("Perdu !");
+        message.member.kick("Perdu !");
+    } else {
+        message.reply("Rien ne se passe.");
+    }
 }
 
 

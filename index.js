@@ -3,7 +3,8 @@ const bot = new Discord.Client({
     intents: [
         Discord.Intents.FLAGS.GUILDS, //Servers
         Discord.Intents.FLAGS.GUILD_MESSAGES, //Server messages
-        Discord.Intents.FLAGS.DIRECT_MESSAGES // Private messages
+        Discord.Intents.FLAGS.DIRECT_MESSAGES, // Private messages
+        Discord.Intents.FLAGS.GUILD_BANS
     ]
 });
 
@@ -43,6 +44,9 @@ bot.on('messageCreate', message => {
                 break;
             case 'poll':
                 gen.poll(bot, message, args);
+                break;
+            case 'roulette':
+                gen.roulette(message);
                 break;
             default:
                 console.log(args[0]);
