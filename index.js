@@ -10,15 +10,14 @@ const bot = new Discord.Client({
 const config = require("./config.json");
 const fs = require('fs')
 
-const TOKEN = 0;
 //Si on est en local, besoin de token.json, sinon va chercher le token dans les variables config de Heroku. Un peu fait à la zob
 try {
     if(fs.existsSync("./token.json")){
         const token = require("./token.json");
-        TOKEN=token.token
+        const TOKEN = token.token
     }
     else {
-        TOKEN = process.env.TOKEN
+        const TOKEN = process.env.TOKEN
     }
 } catch (err) {
     console.error(err)
