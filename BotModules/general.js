@@ -14,7 +14,7 @@ const helpEmbed = new Discord.MessageEmbed()
     .addField("?roulette", "1 chance sur 6 de se faire kick")
     .addField("?stellaris", "Juste un petit rappel...")
     .setTimestamp()
-    .setAuthor("Tropibot", "https://cdn.discordapp.com/attachments/846773549661552710/846773670806683699/Logo_Tropicorp.png", "https://github.com/Tropicorp/tropibot");
+    .setAuthor("Tropibot", "https://cdn.discordapp.com/attachments/621261357852917780/913440125420187688/logo_tropibot.png", "https://github.com/Tropicorp/tropibot");
 
 exports.help = function (message) {
     message.channel.send({embeds : [helpEmbed]});
@@ -43,9 +43,10 @@ exports.roulette = function (message) {
 }
 
 exports.stellaris = function (bot, message) {
-    const cerbear = bot.users.cache.get(config.cerbearId);        
-    cerbear.send("Stellaris when ? Tu as promis.");
-    const m = message.channel.send("<@" + config.cerbearId + ">, PTIT STELLARIS ?");
-    message.channel.send(m.toString());
+    message.channel.send("<@" + config.cerbearId + ">, PTIT STELLARIS ?");
+    const cerbear = bot.users.cache.get(config.cerbearId);
+    if(cerbear){
+        cerbear.send("Stellaris when ? Tu as promis.");
+    }  
     message.delete();
 }
