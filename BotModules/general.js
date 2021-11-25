@@ -1,24 +1,18 @@
 ﻿const Discord = require('discord.js');
+const config = require("../config.json");
+const { MessageMentions: { USERS_PATTERN } } = require('discord.js');
 
 const helpEmbed = new Discord.MessageEmbed()
     .setTitle("HELP - ALED")
     .setColor("#00AE86")
     .setThumbnail("https://cdn.discordapp.com/attachments/846773549661552710/846773681174741032/No_fond_logo_tropicorp.png")
     .setURL("https://www.youtube.com/watch?v=kJQP7kiw5Fk")
+    .setDescription("Report un bug ou demander une feature : https://github.com/Tropicorp/tropibot/issues")
     .addField("?ping","Renvoies Pong")
     .addField("?curse", "Envoie une cursed_image")
     .addField("?poll *question*", "Envoies un sondage")
     .addField("?roulette", "1 chance sur 6 de se faire kick")
-    .setTimestamp()
-    .setAuthor("Tropibot", "https://cdn.discordapp.com/attachments/846773549661552710/846773670806683699/Logo_Tropicorp.png", "https://github.com/Tropicorp/tropibot");
-
-
-const pollEmbed = new Discord.MessageEmbed()
-    .setTitle("TUTO SONDAJ")
-    .setColor("#00AE86")
-    .setThumbnail("https://cdn.discordapp.com/attachments/846773549661552710/846773681174741032/No_fond_logo_tropicorp.png")
-    .setURL("https://www.youtube.com/watch?v=kJQP7kiw5Fk")
-    .setDescription("?poll (question)")
+    .addField("?stellaris", "Juste un petit rappel...")
     .setTimestamp()
     .setAuthor("Tropibot", "https://cdn.discordapp.com/attachments/846773549661552710/846773670806683699/Logo_Tropicorp.png", "https://github.com/Tropicorp/tropibot");
 
@@ -48,5 +42,10 @@ exports.roulette = function (message) {
     }
 }
 
-
-
+exports.stellaris = function (bot, message) {
+    const cerbear = bot.users.cache.get(config.cerbearId);        
+    cerbear.send("Stellaris when ? Tu as promis.");
+    const m = message.channel.send("<@" + config.cerbearId + ">, PTIT STELLARIS ?");
+    message.channel.send(m.toString());
+    message.delete();
+}

@@ -27,7 +27,6 @@ bot.on('messageCreate', message => {
 
     if (message.content[0] === PREFIX) {
         let args = message.content.substring(PREFIX.length).split(" ");
-
         switch (args[0]) {
             case 'ping':
                 message.channel.send('pong');
@@ -47,6 +46,9 @@ bot.on('messageCreate', message => {
                 break;
             case 'roulette':
                 gen.roulette(message);
+                break;
+            case 'stellaris':
+                gen.stellaris(bot,message);
                 break;
             default:
                 console.log(args[0]);
@@ -69,4 +71,3 @@ try {
 } catch (err) {
     console.error(err)
 }
-
