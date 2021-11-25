@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const TOKEN = process.env.TOKEN || 0;
 const bot = new Discord.Client({
     intents: [
         Discord.Intents.FLAGS.GUILDS, //Servers
@@ -51,4 +52,4 @@ bot.on('messageCreate', message => {
     }
 });
 
-bot.login(token.token).catch(console.error);
+bot.login(TOKEN).catch(console.error);
