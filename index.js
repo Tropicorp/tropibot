@@ -22,8 +22,8 @@ bot.on('ready', () => {
 })
 
 bot.on('messageCreate', message => {
-    console.log("Message : "+ message.content + " | Channel ID : " + message.channel.id);
     if (message.author.bot) return;
+    console.log("Author : <" + message.author.username + "> | Message : <" + message.content + "> | Channel ID : <" + message.channel.id + ">");
 
     if(message.content.includes(bot.user.id)){
         message.reply("Tg");
@@ -53,6 +53,9 @@ bot.on('messageCreate', message => {
                 break;
             case 'stellaris':
                 gen.stellaris(bot,message);
+                break;
+            case 'uwu':
+                web.uwu(message);
                 break;
             default:
                 console.log(args[0]);
