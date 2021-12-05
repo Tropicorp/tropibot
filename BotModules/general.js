@@ -34,7 +34,9 @@ exports.poll = function (bot, message, args) {
 }
 
 exports.roulette = function (message) {
-    if(Math.floor(Math.random()*6) === 0){
+    let x = Math.floor(Math.random()*6);
+    console.log(x);
+    if(x === 0){
         message.reply("Perdu !");
         message.member.kick("Perdu !");
     } else {
@@ -43,10 +45,10 @@ exports.roulette = function (message) {
 }
 
 exports.stellaris = function (bot, message) {
-    message.channel.send("<@" + config.cerbearId + ">, PTIT STELLARIS ?");
+    message.reply("C'est bon, personne n'y croyait mais Cerbear à joué à Stellaris.");
     const cerbear = bot.users.cache.get(config.cerbearId);
     if(cerbear != undefined) {
-        cerbear.send("Stellaris when ? Tu as promis.");
+        cerbear.send("Bien joué gamin.");
     }  
     message.delete();
 }
