@@ -50,5 +50,5 @@ exports.stellaris = function (bot, message) {
     if(cerbear != undefined) {
         cerbear.send("Bien joué gamin.");
     }  
-    message.delete();
+    //message.delete();
 }
