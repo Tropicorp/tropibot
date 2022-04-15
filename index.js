@@ -1,5 +1,9 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client({
+
+const fs = require('fs')
+const Logger = require("./utils/Logger");
+
+const client = new Discord.Client({
     intents: [
         Discord.Intents.FLAGS.GUILDS, //Servers
         Discord.Intents.FLAGS.GUILD_MESSAGES, //Server messages
@@ -8,72 +12,38 @@ const bot = new Discord.Client({
     ]
 });
 
-const config = require("./config.json");
-const fs = require('fs')
-const web = require("./BotModules/web");
-const gen = require("./BotModules/general");
+client.commands = new Discord.Collection();
 
-
-const PREFIX = "?";
-
-bot.on('ready', () => {
-    console.log('TROPIBOT ENCLANCHÉ');
-    bot.user.setActivity('Un bot TROPICOOL');
-})
-
-bot.on('messageCreate', message => {
-    if (message.author.bot) return;
-    console.log("Author : <" + message.author.username + "> | Message : <" + message.content + "> | Channel ID : <" + message.channel.id + ">");
-
-    if(message.content.includes(bot.user.id)){
-        message.reply("Tg");
-    }
-
-    if (message.content[0] === PREFIX) {
-        let args = message.content.substring(PREFIX.length).split(" ");
-        switch (args[0]) {
-            case 'ping':
-                message.channel.send('pong');
-                break;
-            case 'suicide':
-                message.channel.send('OOF');
-                bot.destroy();
-                break;
-            case 'help':
-                gen.help(message);
-                break;
-            case 'curse':
-                web.curse(message,args);
-                break;
-            case 'poll':
-                gen.poll(bot, message, args);
-                break;
-            case 'roulette':
-                gen.roulette(message);
-                break;
-            case 'stellaris':
-                gen.stellaris(bot,message);
-                break;
-            case 'uwu':
-                web.uwu(message);
-                break;
-            default:
-                console.log(args[0]);
-                break;
-        }
-    }
+["CommandUtils", "EventUtils"].forEach((handler) => {
+    require(`./utils/handlers/${handler}`)(client);
 });
+
+process.on("exit", (code) => {
+    Logger.client(`Le processus s'est arrêté avec le code: ${code}!`);
+});
+
+process.on("uncaughtException", (err, origin) => {
+    Logger.error(`UNCAUGHT_EXCEPTION: ${err}`);
+    console.error(`Origine: ${origin}`);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+    Logger.warn(`UNHANDLED_REJECTION: ${reason}`);
+    console.log(promise);
+});
+
+process.on("warning", (...args) => Logger.warn(...args));
 
 //Si on est en local, besoin de token.json, sinon va chercher le token dans les variables config de Heroku. Un peu fait à la zob
 try {
     if(fs.existsSync("./token.json")){
         const token = require("./token.json");
         const TOKEN = token.token
-        bot.login(TOKEN).catch(console.error);
+        client.login(TOKEN).catch(console.error);
     }
     else {
         const TOKEN = process.env.TOKEN
-        bot.login(TOKEN).catch(console.error);
+        client.login(TOKEN).catch(console.error);
     }
 } catch (err) {
     console.error(err)
