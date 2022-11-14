@@ -1,13 +1,16 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { execute } = require('./reload');
+
 module.exports = {
-    name: "poll",
-    description: "Faire un sondage",
-    async run(client, message, args) {
-        if (!args[0]) {
-            message.reply("ça s'utilise comme ça : ?poll *question*");
-            return;
-        }
-        let msgArgs = args.slice(0).join(" ");
-        message.channel.send(msgArgs).then(messageReaction => {
+    data: new SlashCommandBuilder()
+        .setName("poll")
+        .setDescription("Faire un sondage")
+        .addStringOption(option =>
+            option.setName("question")
+                .setDescription("La question du sondage")
+                .setRequired(true)),
+    async execute(interaction) {
+        message.channel.send(interaction.options.getString('question')).then(messageReaction => {
             messageReaction.react("✅");
             messageReaction.react("❎");
             message.delete(3000);

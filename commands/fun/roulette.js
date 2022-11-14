@@ -1,17 +1,19 @@
 const Logger = require("../../utils/Logger");
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-    name: "roulette",
-    description: "Renvoies \"Pong! 🏓\"",
-    async run(client, message, args) {
+    data: new SlashCommandBuilder()
+        .setName("roulette")
+        .setDescription("Renvoies \"Pong! 🏓\""),
+    async execute(interaction) {
         let x = Math.floor(Math.random()*6);
         Logger.info("Roulette");
         Logger.info(x);
         if(x === 0){
-            message.reply("Perdu !");
-            message.member.kick("Perdu !");
+            interaction.reply("Perdu !");
+            interaction.member.kick("Perdu !");
         } else {
-            message.reply("Rien ne se passe.");
+            interaction.reply("Rien ne se passe.");
         }
     }
 }

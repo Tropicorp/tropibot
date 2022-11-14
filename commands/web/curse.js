@@ -6,13 +6,10 @@ const rssparser = require('rss-parser');
 let parser = new rssparser();
 
 module.exports = {
-    name: "curse",
-    description: "Renvoies une image maudite",
-    async run(client, message, args) {
-        if (args === undefined) {
-            args = "";
-        }
-    
+    data: new SlashCommandBuilder()
+        .setName("curse")
+        .setDescription("Renvoies une image maudite"),
+    async execute(interaction) {
         (async () => {
     
             let feed = await parser.parseURL('https://www.reddit.com/r/cursedimages/.rss');
@@ -25,8 +22,8 @@ module.exports = {
                 console.log(j + " : " + feed.items[j].link);
             }
             var randPost = Math.floor(Math.random() * rssArray.length) + 1;
-            console.log(rssArray.length + " : " + randPost);
-            message.channel.send(rssArray[randPost]);
+            //console.log(rssArray.length + " : " + randPost);
+            interaction.reply(rssArray[randPost]);
     
         })().catch(console.error);
     }
